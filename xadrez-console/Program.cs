@@ -7,11 +7,10 @@ namespace xadrez_console
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Jogo xadrez - Felipe Freitas");
-            Posicao p;
-            p = new Posicao(3, 4);
+            Tabuleiro tabuleiro = new Tabuleiro(8, 8);
+            Tela.PrintTabuleiro(tabuleiro);
 
-            Console.WriteLine("Posição: "+p);
+            
         }
     }
 }
