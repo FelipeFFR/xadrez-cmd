@@ -20,16 +20,33 @@ namespace xadrez_console
                     if (peca == null)
                         Console.Write("- ");
                     else
-                        Console.Write(peca + " ");
+                    {
+                        ImprimirPeca(peca);
+                        Console.Write(" ");
+                    }
                 }
                 Console.WriteLine("");
+                
             }
 
-            Console.Write("  ");
+
             for (int j = 0; j < tabuleiro.Colunas; j++)
             {
-                Console.Write(Convert.ToChar(j+'a')+" ");
-            }            
+                Console.Write(Convert.ToChar(j + 'a') + " ");
+            }
+        }
+
+        public static void ImprimirPeca(Peca peca)
+        {
+            if(peca.Cor == Cor.Branca)
+                Console.Write(peca);
+            else if(peca.Cor == Cor.Preta)
+            {
+                ConsoleColor consoleColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(peca);
+                Console.ForegroundColor = consoleColor;
+            }
         }
     }
 }
