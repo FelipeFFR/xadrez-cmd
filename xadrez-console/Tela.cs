@@ -13,6 +13,7 @@ namespace xadrez_console
         {
             for (int i = 0; i < tabuleiro.Linhas; i++)
             {
+                Console.Write(tabuleiro.Linhas - i+ " ");
                 for (int j = 0; j < tabuleiro.Colunas; j++)
                 {
                     Peca peca = tabuleiro.ReceberPeca(i, j);
@@ -23,6 +24,12 @@ namespace xadrez_console
                 }
                 Console.WriteLine("");
             }
+
+            Console.Write("  ");
+            for (int j = 0; j < tabuleiro.Colunas; j++)
+            {
+                Console.Write(Convert.ToChar(j+'a')+" ");
+            }            
         }
     }
 }
