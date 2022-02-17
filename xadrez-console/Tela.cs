@@ -11,36 +11,45 @@ namespace xadrez_console
     {
         public static void PrintTabuleiro(tabuleiro.Tabuleiro tabuleiro)
         {
-            for (int i = 0; i < tabuleiro.Linhas; i++)
+            for (int i = 0; i < tabuleiro.Linhas + 1; i++)
             {
-                Console.Write(tabuleiro.Linhas - i+ " ");
+
+                if (i != tabuleiro.Linhas)
+                    Console.Write(tabuleiro.Linhas - i + " ");
+                else
+                    Console.Write("  ");
+
                 for (int j = 0; j < tabuleiro.Colunas; j++)
                 {
-                    Peca peca = tabuleiro.ReceberPeca(i, j);
-                    if (peca == null)
-                        Console.Write("- ");
+                    if (i != tabuleiro.Linhas)
+                    {
+                        Peca peca = tabuleiro.ReceberPeca(i, j);
+                        if (peca == null)
+                            Console.Write("- ");
+                        else
+                        {
+                            ImprimirPeca(peca);
+                            Console.Write(" ");
+                        }
+                    }
                     else
                     {
-                        ImprimirPeca(peca);
-                        Console.Write(" ");
+                        Console.Write(Convert.ToChar(j + 'a') + " ");
                     }
                 }
+
                 Console.WriteLine("");
-                
-            }
 
 
-            for (int j = 0; j < tabuleiro.Colunas; j++)
-            {
-                Console.Write(Convert.ToChar(j + 'a') + " ");
             }
+
         }
 
         public static void ImprimirPeca(Peca peca)
         {
-            if(peca.Cor == Cor.Branca)
+            if (peca.Cor == Cor.Branca)
                 Console.Write(peca);
-            else if(peca.Cor == Cor.Preta)
+            else if (peca.Cor == Cor.Preta)
             {
                 ConsoleColor consoleColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Yellow;

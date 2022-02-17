@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace xadrez_console.tabuleiro
 {
-    class Tabuleiro
+    public class Tabuleiro
     {
         public int Linhas { get; set; }
         public int Colunas { get; set; }
@@ -31,6 +31,17 @@ namespace xadrez_console.tabuleiro
                 throw new exception.TabuleiroException("Já existe uma peça nessa posição!");
             Pecas[pos.Linha, pos.Coluna] = p;
             p.Posicao = pos;
+        }
+
+        public Peca RemovePiece(Posicao pos)
+        {
+            Peca aux = GetPeca(pos);
+            if (aux == null)
+                return null;
+            aux.Posicao = null;
+            Pecas[pos.Linha, pos.Coluna] = null;
+            return aux;
+
         }
 
         public Peca GetPeca(Posicao pos)

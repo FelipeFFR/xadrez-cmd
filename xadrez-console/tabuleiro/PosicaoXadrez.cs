@@ -17,9 +17,9 @@ namespace xadrez_console.tabuleiro
             this.Linha = linha;
         }
 
-        public Posicao ToPosicao(int intLinhaTabuleiro)
+        public Posicao ToPosition()
         {
-            return new Posicao(intLinhaTabuleiro - Linha, Coluna - 'a');
+            return new Posicao(8 - Linha, Coluna - 'a');
         }
 
         public override string ToString()

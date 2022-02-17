@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace xadrez_console.tabuleiro
 {
-    class Peca
+    public class Peca
     {
         public Posicao Posicao { get; set; }
         public Cor Cor { get; protected set; }
@@ -21,6 +21,10 @@ namespace xadrez_console.tabuleiro
             this.QtdMovimentos = 0;
         }
 
+        public void AddQtdMoviment()
+        {
+            QtdMovimentos++;
+        }
         
     }
 }
