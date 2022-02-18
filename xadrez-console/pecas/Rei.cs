@@ -12,6 +12,12 @@ namespace xadrez_console.jogoXadrez
         public Rei(Tabuleiro tab, Cor cor) : base(tab, cor){
         }
 
+        public override bool[,] GetPossiblesMoviment()
+        {
+            bool[,] blnMat = new bool[Tab.Linhas, Tab.Colunas];
+            return blnMat;
+        }
+
         public override string ToString()
         {
             return "R";

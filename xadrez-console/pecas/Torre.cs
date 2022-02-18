@@ -13,6 +13,11 @@ namespace xadrez_console.jogoXadrez
         {
         }
 
+        public override bool[,] GetPossiblesMoviment()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return "T";
