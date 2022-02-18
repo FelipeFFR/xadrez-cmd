@@ -57,5 +57,12 @@ namespace xadrez_console
                 Console.ForegroundColor = consoleColor;
             }
         }
+
+        public static PosicaoXadrez LerPosicaoXadrez(string strPosicao)
+        {
+            char coluna = strPosicao[0];
+            int linha = int.Parse(strPosicao[1]+"");
+            return new PosicaoXadrez(coluna, linha);
+        }
     }
 }

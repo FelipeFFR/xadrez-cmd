@@ -8,6 +8,7 @@ namespace xadrez_console.regras
         public Tabuleiro tab { get; private set; }
         private int _turno;
         private Cor _CorJogadorTurno;
+        public bool BlnPartidaTerminada { get; private set; }
 
         public PartidaDeXadrez()
         {
