@@ -26,6 +26,13 @@ namespace xadrez_console.tabuleiro
             QtdMovimentos++;
         }
 
+        public bool CanMovePiece(Posicao pos)
+        {
+            Tab.ValidarPosicao(pos);
+            Peca p = Tab.GetPiece(pos);
+            return p == null || p.Cor != this.Cor;
+        }
+
         public abstract bool[,] GetPossiblesMoviment();
         
     }

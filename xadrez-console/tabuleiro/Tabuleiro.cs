@@ -35,7 +35,7 @@ namespace xadrez_console.tabuleiro
 
         public Peca RemovePiece(Posicao pos)
         {
-            Peca aux = GetPeca(pos);
+            Peca aux = GetPiece(pos);
             if (aux == null)
                 return null;
             aux.Posicao = null;
@@ -44,7 +44,7 @@ namespace xadrez_console.tabuleiro
 
         }
 
-        public Peca GetPeca(Posicao pos)
+        public Peca GetPiece(Posicao pos)
         {
             return Pecas[pos.Linha, pos.Coluna];
         }
@@ -52,7 +52,7 @@ namespace xadrez_console.tabuleiro
         public bool ExistePeca(Posicao pos)
         {
             ValidarPosicao(pos);
-            return GetPeca(pos) != null;
+            return GetPiece(pos) != null;
         }
 
         public void ValidarPosicao(Posicao pos)
