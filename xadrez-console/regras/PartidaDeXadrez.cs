@@ -6,24 +6,59 @@ namespace xadrez_console.regras
     public class PartidaDeXadrez
     {
         public Tabuleiro tab { get; private set; }
-        private int _turno;
-        private Cor _CorJogadorTurno;
+        public int Turno { get; private set; }
+        public Cor CorJogadorTurno { get; private set; }
         public bool BlnPartidaTerminada { get; private set; }
 
         public PartidaDeXadrez()
         {
             tab = new Tabuleiro(8, 8);
-            _turno = 1;
-            _CorJogadorTurno = Cor.Branca;
+            Turno = 1;
+            CorJogadorTurno = Cor.Branca;
             ColocarPieces();
         }
 
-        public void ExecuteMoviment(Posicao origin, Posicao destiny)
+        private void ExecuteMoviment(Posicao origin, Posicao destiny)
         {
             Peca p = tab.RemovePiece(origin);
             p.AddQtdMoviment();
             Peca pieceCaptured = tab.RemovePiece(destiny);
             tab.ColocarPeca(p, destiny);
+
+        }
+
+        public void ValidatePositionOrigen(Posicao pos)
+        {
+            Peca piece = tab.GetPiece(pos);
+            if (piece == null)
+            {
+                throw new exception.TabuleiroException("Não existe peça na posição de origem escolhida.");
+            }
+            else if(piece.Cor != CorJogadorTurno)
+            {
+                throw new exception.TabuleiroException("A peça de origem escolhida não é sua.");
+            }
+            else if(!piece.ExistsPossiblesMoviments())
+                throw new exception.TabuleiroException("Não há movimentos possíveis para a peça de origem escolhida.");
+        }
+
+        public void ValidatePositionDestiny(Posicao posOrigen, Posicao posDestiny)
+        {
+            var piece = tab.GetPiece(posOrigen);
+            if (!piece.CanMovePiece(posDestiny))
+                throw new exception.TabuleiroException("Posição de destino inválida.");
+        }
+
+        public void ChangePlayer()
+        {
+            CorJogadorTurno = CorJogadorTurno == Cor.Branca ? Cor.Preta : Cor.Branca;
+        }
+
+        public void MakesMove(Posicao origin, Posicao destiny)
+        {
+            ExecuteMoviment(origin, destiny);
+            Turno++;
+            ChangePlayer();
 
         }
 

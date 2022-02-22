@@ -29,7 +29,7 @@ namespace xadrez_console
                             Console.BackgroundColor = backgroundColorModified;
                         else
                             Console.BackgroundColor = backgroundColorOrigin;
-                        Peca peca = tabuleiro.ReceberPeca(i, j);
+                        Peca peca = tabuleiro.GetPiece(i, j);
                         ImprimirPeca(peca);
 
                     }

@@ -20,9 +20,14 @@ namespace xadrez_console.tabuleiro
             Pecas = new Peca[linhas, colunas];
         }
 
-        public Peca ReceberPeca(int linha, int coluna)
+        public Peca GetPiece(int linha, int coluna)
         {
             return Pecas[linha, coluna];
+        }
+
+        public Peca GetPiece(Posicao pos)
+        {
+            return Pecas[pos.Linha, pos.Coluna];
         }
 
         public void ColocarPeca(Peca p, Posicao pos)
@@ -44,10 +49,7 @@ namespace xadrez_console.tabuleiro
 
         }
 
-        public Peca GetPiece(Posicao pos)
-        {
-            return Pecas[pos.Linha, pos.Coluna];
-        }
+        
 
         public bool ExistePeca(Posicao pos)
         {
@@ -57,7 +59,7 @@ namespace xadrez_console.tabuleiro
 
         public void ValidarPosicao(Posicao pos)
         {
-            if (pos.Linha < 0 || pos.Linha > Linhas || pos.Coluna < 0 || pos.Coluna > Colunas)
+            if (pos.Linha < 0 || pos.Linha > Linhas -1 || pos.Coluna < 0 || pos.Coluna > Colunas -1)
                 throw new exception.TabuleiroException("Posição inválida!");
         }
 
