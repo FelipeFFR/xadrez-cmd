@@ -1,6 +1,7 @@
-﻿
+﻿using System.Collections.Generic;
 using xadrez_console.jogoXadrez;
 using xadrez_console.tabuleiro;
+
 namespace xadrez_console.regras
 {
     public class PartidaDeXadrez
@@ -10,12 +11,18 @@ namespace xadrez_console.regras
         public Cor CorJogadorTurno { get; private set; }
         public bool BlnPartidaTerminada { get; private set; }
 
+        private HashSet<Peca> pecas;
+
+        private HashSet<Peca> capturadas;
         public PartidaDeXadrez()
         {
             tab = new Tabuleiro(8, 8);
             Turno = 1;
             CorJogadorTurno = Cor.Branca;
             ColocarPieces();
+            BlnPartidaTerminada = false;
+            pecas = new HashSet<Peca>();
+            capturadas = new HashSet<Peca>();
         }
 
         private void ExecuteMoviment(Posicao origin, Posicao destiny)
