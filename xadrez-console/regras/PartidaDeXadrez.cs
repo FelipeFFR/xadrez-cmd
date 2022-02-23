@@ -19,10 +19,11 @@ namespace xadrez_console.regras
             tab = new Tabuleiro(8, 8);
             Turno = 1;
             CorJogadorTurno = Cor.Branca;
-            ColocarPieces();
-            BlnPartidaTerminada = false;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
+            ColocarPieces();
+            BlnPartidaTerminada = false;
+            
         }
 
         private void ExecuteMoviment(Posicao origin, Posicao destiny)
@@ -31,6 +32,29 @@ namespace xadrez_console.regras
             p.AddQtdMoviment();
             Peca pieceCaptured = tab.RemovePiece(destiny);
             tab.ColocarPeca(p, destiny);
+            if(!(pieceCaptured is null))
+            {
+                capturadas.Add(pieceCaptured);
+            }
+
+        }
+
+        public HashSet<Peca> PiecesCaptureds(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            aux.UnionWith(capturadas);
+            aux.RemoveWhere(a => a.Cor != cor);
+            return aux;
+
+        }
+
+        public HashSet<Peca> GetPiecesInGame(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            aux.UnionWith(pecas);
+            aux.RemoveWhere(a => a.Cor != cor);
+            aux.ExceptWith(PiecesCaptureds(cor));
+            return aux;
 
         }
 
@@ -71,11 +95,20 @@ namespace xadrez_console.regras
 
         public void ColocarPieces()
         {
-            tab.ColocarPeca(new Torre(tab, Cor.Preta), new PosicaoXadrez('c', 1).ToPosition());
-            tab.ColocarPeca(new Torre(tab, Cor.Preta), new PosicaoXadrez('c', 2).ToPosition());
-            tab.ColocarPeca(new Rei(tab, Cor.Branca), new PosicaoXadrez('c', 3).ToPosition());
+            PutNewPiece('a', 1, new Torre(tab, Cor.Preta));
+            PutNewPiece('h', 1, new Torre(tab, Cor.Preta));
+            PutNewPiece('c', 1, new Rei(tab, Cor.Preta));
 
-            tab.ColocarPeca(new Torre(tab, Cor.Branca), new PosicaoXadrez('c', 4).ToPosition());
+            PutNewPiece('c', 8, new Rei(tab, Cor.Branca));
+            PutNewPiece('a', 8, new Torre(tab, Cor.Branca));
+            PutNewPiece('h', 8, new Torre(tab, Cor.Branca));
+
+        }
+
+        public void PutNewPiece(char column, int line, Peca newPiece)
+        {
+            tab.ColocarPeca(newPiece, new PosicaoXadrez(column, line).ToPosition());
+            pecas.Add(newPiece);
         }
     }
 }
