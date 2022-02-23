@@ -39,6 +39,36 @@ namespace xadrez_console.regras
 
         }
 
+        public bool IsXeque(Cor cor)
+        {
+            Peca king = King(cor);
+            if (king == null)
+                throw new exception.TabuleiroException("Não existe o rei da cor "+cor+" no tabuleiro.");
+
+            foreach (Peca x in GetPiecesInGame(GetCollorOpponent(cor)))
+            {
+                bool[,] mat = x.GetPossiblesMoviment();
+                if (mat[king.Posicao.Linha, king.Posicao.Coluna])
+                    return true;
+            }
+            return false;
+        }
+
+        private Peca King(Cor cor)
+        {
+            foreach (Peca x in GetPiecesInGame(cor))
+            {
+                if (x is Rei)
+                    return x;
+            }
+            return null;
+        }
+
+        private Cor GetCollorOpponent(Cor cor)
+        {
+            return cor == Cor.Branca ? Cor.Preta : Cor.Branca;
+        }
+
         public HashSet<Peca> PiecesCaptureds(Cor cor)
         {
             HashSet<Peca> aux = new HashSet<Peca>();
