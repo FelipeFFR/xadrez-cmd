@@ -14,6 +14,9 @@ namespace xadrez_console.regras
         private HashSet<Peca> pecas;
 
         private HashSet<Peca> capturadas;
+
+        public bool BlnIsXeque { get; private set; }
+
         public PartidaDeXadrez()
         {
             tab = new Tabuleiro(8, 8);
@@ -23,27 +26,28 @@ namespace xadrez_console.regras
             capturadas = new HashSet<Peca>();
             ColocarPieces();
             BlnPartidaTerminada = false;
-            
+            BlnIsXeque = false;
+
         }
 
-        private void ExecuteMoviment(Posicao origin, Posicao destiny)
+        private Peca ExecuteMoviment(Posicao origin, Posicao destiny)
         {
             Peca p = tab.RemovePiece(origin);
             p.AddQtdMoviment();
             Peca pieceCaptured = tab.RemovePiece(destiny);
             tab.ColocarPeca(p, destiny);
-            if(!(pieceCaptured is null))
+            if (!(pieceCaptured is null))
             {
                 capturadas.Add(pieceCaptured);
             }
-
+            return pieceCaptured;
         }
 
         public bool IsXeque(Cor cor)
         {
             Peca king = King(cor);
             if (king == null)
-                throw new exception.TabuleiroException("Não existe o rei da cor "+cor+" no tabuleiro.");
+                throw new exception.TabuleiroException("Não existe o rei da cor " + cor + " no tabuleiro.");
 
             foreach (Peca x in GetPiecesInGame(GetCollorOpponent(cor)))
             {
@@ -95,11 +99,11 @@ namespace xadrez_console.regras
             {
                 throw new exception.TabuleiroException("Não existe peça na posição de origem escolhida.");
             }
-            else if(piece.Cor != CorJogadorTurno)
+            else if (piece.Cor != CorJogadorTurno)
             {
                 throw new exception.TabuleiroException("A peça de origem escolhida não é sua.");
             }
-            else if(!piece.ExistsPossiblesMoviments())
+            else if (!piece.ExistsPossiblesMoviments())
                 throw new exception.TabuleiroException("Não há movimentos possíveis para a peça de origem escolhida.");
         }
 
@@ -115,9 +119,34 @@ namespace xadrez_console.regras
             CorJogadorTurno = CorJogadorTurno == Cor.Branca ? Cor.Preta : Cor.Branca;
         }
 
+        public void UndoMove(Posicao origin, Posicao destiny, Peca pieceCaptured)
+        {
+            Peca p = tab.RemovePiece(destiny);
+            p.DecrementQtdMoviment();
+            if(pieceCaptured != null)
+            {
+                tab.ColocarPeca(pieceCaptured, destiny);
+                capturadas.Remove(pieceCaptured);
+            }
+            tab.ColocarPeca(p, origin);
+        }
+
         public void MakesMove(Posicao origin, Posicao destiny)
         {
-            ExecuteMoviment(origin, destiny);
+            Peca pieceCaptured = ExecuteMoviment(origin, destiny);
+
+            if (IsXeque(CorJogadorTurno))
+            {
+                UndoMove(origin, destiny, pieceCaptured);
+                throw new exception.TabuleiroException("Você não pode se colocar em xeque.");
+            }
+
+            if (IsXeque(GetCollorOpponent(CorJogadorTurno)))
+                BlnIsXeque = true;
+            else
+                BlnIsXeque = false;
+
+
             Turno++;
             ChangePlayer();
 

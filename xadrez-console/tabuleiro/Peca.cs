@@ -26,6 +26,11 @@ namespace xadrez_console.tabuleiro
             QtdMovimentos++;
         }
 
+        public void DecrementQtdMoviment()
+        {
+            QtdMovimentos--;
+        }
+
         public bool CanMovePiece(Posicao pos)
         {
             try

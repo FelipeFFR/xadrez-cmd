@@ -33,7 +33,9 @@ namespace xadrez_console
 
                         if (!(Console.BackgroundColor == backgroundColorModified) &&
                             (i % 2 == 0 && j % 2 == 0) || ((i % 2 == 1 && j % 2 == 1)))
-                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.BackgroundColor = ConsoleColor.DarkGray;
+                        else if(!(Console.BackgroundColor == backgroundColorModified))
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;
 
                         ImprimirPeca(peca);
                         Console.BackgroundColor = ConsoleColor.Black;
@@ -44,7 +46,7 @@ namespace xadrez_console
                         Console.Write(Convert.ToChar(j + 'a') + " ");
                     }
                 }
-
+                Console.BackgroundColor = ConsoleColor.Black;
                 Console.WriteLine("");
                 Console.BackgroundColor = backgroundColorOrigin;
 
@@ -62,18 +64,22 @@ namespace xadrez_console
 
             Console.WriteLine("Turno: " + partida.Turno);
             Console.WriteLine("Aguardando jogada: " + partida.CorJogadorTurno);
+            if(partida.BlnIsXeque)
+            {
+                Console.WriteLine("XEQUE!");
+            }
         }
 
         public static void PrintCapturedPieces(regras.PartidaDeXadrez partida)
         {
             Console.WriteLine("Peças captudaras: ");
             Console.Write("Brancas: ");
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.White;
             PrintGroupCapturedPieces(partida.PiecesCaptureds(Cor.Branca));
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine();
             Console.Write("Pretas: ");
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Red;
             PrintGroupCapturedPieces(partida.PiecesCaptureds(Cor.Preta));
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine();
@@ -103,7 +109,7 @@ namespace xadrez_console
                 if (peca.Cor == Cor.Branca)
                 {
                     ConsoleColor consoleColor = Console.ForegroundColor;
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(peca);
                     Console.ForegroundColor = consoleColor;
                     //Console.Write(peca);
@@ -111,7 +117,7 @@ namespace xadrez_console
                 else if (peca.Cor == Cor.Preta)
                 {
                     ConsoleColor consoleColor = Console.ForegroundColor;
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.Write(peca);
                     Console.ForegroundColor = consoleColor;
                 }
