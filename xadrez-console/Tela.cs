@@ -63,10 +63,19 @@ namespace xadrez_console
             Console.WriteLine();
 
             Console.WriteLine("Turno: " + partida.Turno);
-            Console.WriteLine("Aguardando jogada: " + partida.CorJogadorTurno);
-            if(partida.BlnIsXeque)
+            if (!partida.BlnPartidaTerminada)
             {
-                Console.WriteLine("XEQUE!");
+                Console.WriteLine("Aguardando jogada: " + partida.CorJogadorTurno);
+                if (partida.BlnIsCheck)
+                {
+                    Console.WriteLine("XEQUE!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine("Vencedor: "+ partida.CorJogadorTurno);
+
             }
         }
 
@@ -127,9 +136,16 @@ namespace xadrez_console
 
         public static PosicaoXadrez LerPosicaoXadrez(string strPosicao)
         {
-            char coluna = strPosicao[0];
-            int linha = int.Parse(strPosicao[1] + "");
-            return new PosicaoXadrez(coluna, linha);
+            if (!String.IsNullOrEmpty(strPosicao))
+            {
+                char coluna = strPosicao[0];
+                int linha = int.Parse(strPosicao[1] + "");
+                return new PosicaoXadrez(coluna, linha);
+            }
+            else
+            {
+                throw new exception.TabuleiroException("Digite uma posição válida.");
+            }
         }
     }
 }

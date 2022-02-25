@@ -15,7 +15,7 @@ namespace xadrez_console.regras
 
         private HashSet<Peca> capturadas;
 
-        public bool BlnIsXeque { get; private set; }
+        public bool BlnIsCheck { get; private set; }
 
         public PartidaDeXadrez()
         {
@@ -26,7 +26,7 @@ namespace xadrez_console.regras
             capturadas = new HashSet<Peca>();
             ColocarPieces();
             BlnPartidaTerminada = false;
-            BlnIsXeque = false;
+            BlnIsCheck = false;
 
         }
 
@@ -57,10 +57,11 @@ namespace xadrez_console.regras
                     {
                         if (arrBlnMat[i, j])
                         {
+                            Posicao origin = p.Posicao;
                             Posicao destiny = new Posicao(i, j);
-                            Peca pieceCaptured = ExecuteMoviment(p.Posicao, destiny);
+                            Peca pieceCaptured = ExecuteMoviment(origin, destiny);
                             bool blnTesteXeque = IsInCheck(cor);
-                            UndoMove(p.Posicao, destiny, pieceCaptured);
+                            UndoMove(origin, destiny, pieceCaptured);
                             if (!blnTesteXeque)
                                 return false;
                         }
@@ -170,9 +171,9 @@ namespace xadrez_console.regras
             }
 
             if (IsInCheck(GetCollorOpponent(CorJogadorTurno)))
-                BlnIsXeque = true;
+                BlnIsCheck = true;
             else
-                BlnIsXeque = false;
+                BlnIsCheck = false;
 
             if (IsInCkeckMate(GetCollorOpponent(CorJogadorTurno)))
             {
@@ -187,13 +188,16 @@ namespace xadrez_console.regras
 
         public void ColocarPieces()
         {
-            PutNewPiece('a', 1, new Torre(tab, Cor.Preta));
-            PutNewPiece('h', 1, new Torre(tab, Cor.Preta));
-            PutNewPiece('c', 1, new Rei(tab, Cor.Preta));
 
-            PutNewPiece('c', 8, new Rei(tab, Cor.Branca));
-            PutNewPiece('a', 8, new Torre(tab, Cor.Branca));
-            PutNewPiece('h', 8, new Torre(tab, Cor.Branca));
+            PutNewPiece('a', 8, new Rei(tab, Cor.Preta));
+            PutNewPiece('h', 8, new Torre(tab, Cor.Preta));
+
+            PutNewPiece('h', 6, new Torre(tab, Cor.Branca));
+            PutNewPiece('b', 1, new Torre(tab, Cor.Branca));
+            PutNewPiece('d', 1, new Torre(tab, Cor.Branca));
+            PutNewPiece('c', 1, new Rei(tab, Cor.Branca));
+
+            
 
         }
 
