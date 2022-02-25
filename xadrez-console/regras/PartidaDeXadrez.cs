@@ -43,7 +43,35 @@ namespace xadrez_console.regras
             return pieceCaptured;
         }
 
-        public bool IsXeque(Cor cor)
+        public bool IsInCkeckMate(Cor cor)
+        {
+            if (!IsInCheck(cor))
+                return false;
+
+            foreach (Peca p in GetPiecesInGame(cor))
+            {
+                bool[,] arrBlnMat = p.GetPossiblesMoviment();
+                for (int i = 0; i < tab.Linhas; i++)
+                {
+                    for (int j = 0; j < tab.Colunas; j++)
+                    {
+                        if (arrBlnMat[i, j])
+                        {
+                            Posicao destiny = new Posicao(i, j);
+                            Peca pieceCaptured = ExecuteMoviment(p.Posicao, destiny);
+                            bool blnTesteXeque = IsInCheck(cor);
+                            UndoMove(p.Posicao, destiny, pieceCaptured);
+                            if (!blnTesteXeque)
+                                return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public bool IsInCheck(Cor cor)
         {
             Peca king = King(cor);
             if (king == null)
@@ -123,7 +151,7 @@ namespace xadrez_console.regras
         {
             Peca p = tab.RemovePiece(destiny);
             p.DecrementQtdMoviment();
-            if(pieceCaptured != null)
+            if (pieceCaptured != null)
             {
                 tab.ColocarPeca(pieceCaptured, destiny);
                 capturadas.Remove(pieceCaptured);
@@ -135,21 +163,26 @@ namespace xadrez_console.regras
         {
             Peca pieceCaptured = ExecuteMoviment(origin, destiny);
 
-            if (IsXeque(CorJogadorTurno))
+            if (IsInCheck(CorJogadorTurno))
             {
                 UndoMove(origin, destiny, pieceCaptured);
                 throw new exception.TabuleiroException("Você não pode se colocar em xeque.");
             }
 
-            if (IsXeque(GetCollorOpponent(CorJogadorTurno)))
+            if (IsInCheck(GetCollorOpponent(CorJogadorTurno)))
                 BlnIsXeque = true;
             else
                 BlnIsXeque = false;
 
-
-            Turno++;
-            ChangePlayer();
-
+            if (IsInCkeckMate(GetCollorOpponent(CorJogadorTurno)))
+            {
+                BlnPartidaTerminada = true;
+            }
+            else
+            {
+                Turno++;
+                ChangePlayer();
+            }
         }
 
         public void ColocarPieces()
