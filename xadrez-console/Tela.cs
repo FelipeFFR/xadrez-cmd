@@ -34,7 +34,7 @@ namespace xadrez_console
                         if (!(Console.BackgroundColor == backgroundColorModified) &&
                             ((i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1)))
                             Console.BackgroundColor = ConsoleColor.DarkGray;
-                        else if(!(Console.BackgroundColor == backgroundColorModified))
+                        else if (!(Console.BackgroundColor == backgroundColorModified))
                             Console.BackgroundColor = ConsoleColor.DarkGreen;
 
                         ImprimirPeca(peca);
@@ -74,7 +74,7 @@ namespace xadrez_console
             else
             {
                 Console.WriteLine("XEQUEMATE!");
-                Console.WriteLine("Vencedor: "+ partida.CorJogadorTurno);
+                Console.WriteLine("Vencedor: " + partida.CorJogadorTurno);
 
             }
         }
@@ -99,7 +99,7 @@ namespace xadrez_console
             Console.Write("[");
             foreach (Peca x in PiecesCaptureds)
             {
-                Console.Write(x+", ");
+                Console.Write(x + ", ");
             }
             Console.Write("]");
         }
@@ -115,11 +115,12 @@ namespace xadrez_console
             }
             else
             {
+                string strPrintPiece = peca.ToString();
                 if (peca.Cor == Cor.Branca)
                 {
                     ConsoleColor consoleColor = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(peca);
+                    Console.Write(strPrintPiece);
                     Console.ForegroundColor = consoleColor;
                     //Console.Write(peca);
                 }
@@ -127,10 +128,11 @@ namespace xadrez_console
                 {
                     ConsoleColor consoleColor = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write(peca);
+                    Console.Write(strPrintPiece);
                     Console.ForegroundColor = consoleColor;
                 }
-                Console.Write(" ");
+                if (strPrintPiece.Length == 1)
+                    Console.Write(" ");
             }
         }
 

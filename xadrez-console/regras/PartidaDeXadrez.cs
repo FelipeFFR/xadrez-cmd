@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using xadrez_console.jogoXadrez;
+using xadrez_console.pecas;
 using xadrez_console.tabuleiro;
 
 namespace xadrez_console.regras
@@ -193,13 +193,36 @@ namespace xadrez_console.regras
             PutNewPiece('h', 8, new Torre(tab, Cor.Preta));
 
             PutNewPiece('h', 6, new Torre(tab, Cor.Branca));
-            
-            PutNewPiece('d', 1, new Torre(tab, Cor.Branca));
-            PutNewPiece('c', 1, new Rei(tab, Cor.Branca));
 
-            
+            PutNewPiece('a', 1, new Torre(tab, Cor.Branca));
+            PutNewPiece('b', 1, new Cavalo(tab, Cor.Branca));
+            PutNewPiece('c', 1, new Bispo(tab, Cor.Branca));
+            PutNewPiece('d', 1, new Rei(tab, Cor.Branca));
+            PutNewPiece('e', 1, new Rainha(tab, Cor.Branca));
+            PutNewPiece('f', 1, new Torre(tab, Cor.Branca));
+            PutNewPiece('g', 1, new Torre(tab, Cor.Branca));
+            PutNewPiece('h', 1, new Torre(tab, Cor.Branca));
+
+            char chrValue = 'h';
+            while (chrValue > 'a')
+            {
+                PutNewPiece(chrValue, 2, new Peao(tab, Cor.Branca));
+                chrValue = (char)(((int)chrValue) - 1);
+            }
+
 
         }
+
+        public void PutNewPiece(Posicao position, Peca newPiece)
+        {
+            tab.ColocarPeca(newPiece, position);
+            pecas.Add(newPiece);
+        }
+        //public void PutNewPiece(int column, int line, Peca newPiece)
+        //{
+        //    tab.ColocarPeca(newPiece, new PosicaoXadrez(column, line));
+        //    pecas.Add(newPiece);
+        //}
 
         public void PutNewPiece(char column, int line, Peca newPiece)
         {

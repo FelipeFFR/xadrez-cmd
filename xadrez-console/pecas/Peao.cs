@@ -7,9 +7,9 @@ using xadrez_console.tabuleiro;
 
 namespace xadrez_console.pecas
 {
-    class Torre : Peca
+    class Peao : Peca
     {
-        public Torre(Tabuleiro tab, Cor cor) : base(tab, cor)
+        public Peao(Tabuleiro tab, Cor cor) : base(tab, cor)
         {
         }
 
@@ -29,7 +29,7 @@ namespace xadrez_console.pecas
             }
 
             //abaixo
-            position.DefineValues(Posicao.Linha +1, Posicao.Coluna);
+            position.DefineValues(Posicao.Linha + 1, Posicao.Coluna);
             while (CanMovePiece(position))
             {
                 blnMat[position.Linha, position.Coluna] = true;
@@ -40,7 +40,7 @@ namespace xadrez_console.pecas
             }
 
             //direita
-            position.DefineValues(Posicao.Linha, Posicao.Coluna+1);
+            position.DefineValues(Posicao.Linha, Posicao.Coluna + 1);
             while (CanMovePiece(position))
             {
                 blnMat[position.Linha, position.Coluna] = true;
@@ -64,7 +64,7 @@ namespace xadrez_console.pecas
         }
         public override string ToString()
         {
-            return "T";
+            return "P";
         }
     }
 }
