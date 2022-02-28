@@ -12,7 +12,7 @@ namespace xadrez_console
         public static void PrintTabuleiro(tabuleiro.Tabuleiro tabuleiro, bool[,] blnPossiblesPositions = null)
         {
             ConsoleColor backgroundColorOrigin = Console.BackgroundColor;
-            ConsoleColor backgroundColorModified = ConsoleColor.DarkGray;
+            ConsoleColor backgroundColorModified = ConsoleColor.Red;
             for (int i = 0; i < tabuleiro.Linhas + 1; i++)
             {
 
@@ -32,7 +32,7 @@ namespace xadrez_console
                         Peca peca = tabuleiro.GetPiece(i, j);
 
                         if (!(Console.BackgroundColor == backgroundColorModified) &&
-                            (i % 2 == 0 && j % 2 == 0) || ((i % 2 == 1 && j % 2 == 1)))
+                            ((i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1)))
                             Console.BackgroundColor = ConsoleColor.DarkGray;
                         else if(!(Console.BackgroundColor == backgroundColorModified))
                             Console.BackgroundColor = ConsoleColor.DarkGreen;

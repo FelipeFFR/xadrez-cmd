@@ -193,7 +193,7 @@ namespace xadrez_console.regras
             PutNewPiece('h', 8, new Torre(tab, Cor.Preta));
 
             PutNewPiece('h', 6, new Torre(tab, Cor.Branca));
-            PutNewPiece('b', 1, new Torre(tab, Cor.Branca));
+            
             PutNewPiece('d', 1, new Torre(tab, Cor.Branca));
             PutNewPiece('c', 1, new Rei(tab, Cor.Branca));
 
