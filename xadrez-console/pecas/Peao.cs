@@ -17,51 +17,39 @@ namespace xadrez_console.pecas
         {
             bool[,] blnMat = new bool[Tab.Linhas, Tab.Colunas];
             Posicao position = new Posicao(0, 0);
+            int intValue = 0;
+            if (Cor == Cor.Preta)
+                intValue = -1;
+            else if (Cor == Cor.Branca)
+                intValue = 1;
+
             //acima
-            position.DefineValues(Posicao.Linha - 1, Posicao.Coluna);
-            while (CanMovePiece(position))
-            {
+            position.DefineValues(Posicao.Linha - intValue, Posicao.Coluna);
+            if (CanMovePiece(position) && !Tab.ExistePeca(position))
                 blnMat[position.Linha, position.Coluna] = true;
-                Peca piece = Tab.GetPiece(position);
-                if (piece != null && piece.Cor != this.Cor)
-                    break;
-                position.Linha--;
+
+            //Primeiro movimento
+            if (QtdMovimentos == 0)
+            {
+                position.DefineValues(Posicao.Linha - intValue * 2, Posicao.Coluna);
+                if (CanMovePiece(position) && !Tab.ExistePeca(position))
+                    blnMat[position.Linha, position.Coluna] = true;
             }
 
-            //abaixo
-            position.DefineValues(Posicao.Linha + 1, Posicao.Coluna);
-            while (CanMovePiece(position))
-            {
+            //Verifica se pode capturar esquerda
+            position.DefineValues(Posicao.Linha - intValue, Posicao.Coluna - 1);
+            if (CanMovePiece(position) && Tab.ExistePeca(position))
                 blnMat[position.Linha, position.Coluna] = true;
-                Peca piece = Tab.GetPiece(position);
-                if (piece != null && piece.Cor != this.Cor)
-                    break;
-                position.Linha++;
-            }
 
-            //direita
-            position.DefineValues(Posicao.Linha, Posicao.Coluna + 1);
-            while (CanMovePiece(position))
-            {
+            //Verifica se pode capturar direita
+            position.DefineValues(Posicao.Linha - intValue, Posicao.Coluna + 1);
+            if (CanMovePiece(position) && Tab.ExistePeca(position))
                 blnMat[position.Linha, position.Coluna] = true;
-                Peca piece = Tab.GetPiece(position);
-                if (piece != null && piece.Cor != this.Cor)
-                    break;
-                position.Coluna++;
-            }
-            //esquerda
-            position.DefineValues(Posicao.Linha, Posicao.Coluna - 1);
-            while (CanMovePiece(position))
-            {
-                blnMat[position.Linha, position.Coluna] = true;
-                Peca piece = Tab.GetPiece(position);
-                if (piece != null && piece.Cor != this.Cor)
-                    break;
-                position.Coluna--;
-            }
+
 
             return blnMat;
         }
+
         public override string ToString()
         {
             return "P";

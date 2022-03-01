@@ -24,7 +24,8 @@ namespace xadrez_console.regras
             CorJogadorTurno = Cor.Branca;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
-            ColocarPieces();
+            PutPieces(Cor.Preta);
+            PutPieces(Cor.Branca);
             BlnPartidaTerminada = false;
             BlnIsCheck = false;
 
@@ -186,30 +187,34 @@ namespace xadrez_console.regras
             }
         }
 
-        public void ColocarPieces()
+        public void PutPieces(Cor cor)
         {
+            int intLine = 0;
+            if (cor == Cor.Preta)
+                intLine = 8;
+            else if (cor == Cor.Branca)
+                intLine = 1;
 
-            PutNewPiece('a', 8, new Rei(tab, Cor.Preta));
-            PutNewPiece('h', 8, new Torre(tab, Cor.Preta));
+            PutNewPiece('a', intLine, new Torre(tab, cor));
+            PutNewPiece('b', intLine, new Cavalo(tab, cor));
+            PutNewPiece('c', intLine, new Bispo(tab, cor));
+            PutNewPiece('d', intLine, new Rei(tab, cor));
+            PutNewPiece('e', intLine, new Rainha(tab, cor));
+            PutNewPiece('f', intLine, new Bispo(tab, cor));
+            PutNewPiece('g', intLine, new Cavalo(tab, cor));
+            PutNewPiece('h', intLine, new Torre(tab, cor));
 
-            PutNewPiece('h', 6, new Torre(tab, Cor.Branca));
+            if (cor == Cor.Preta)
+                intLine--;
+            else if (cor == Cor.Branca)
+                intLine++;
 
-            PutNewPiece('a', 1, new Torre(tab, Cor.Branca));
-            PutNewPiece('b', 1, new Cavalo(tab, Cor.Branca));
-            PutNewPiece('c', 1, new Bispo(tab, Cor.Branca));
-            PutNewPiece('d', 1, new Rei(tab, Cor.Branca));
-            PutNewPiece('e', 1, new Rainha(tab, Cor.Branca));
-            PutNewPiece('f', 1, new Torre(tab, Cor.Branca));
-            PutNewPiece('g', 1, new Torre(tab, Cor.Branca));
-            PutNewPiece('h', 1, new Torre(tab, Cor.Branca));
-
-            char chrValue = 'h';
-            while (chrValue > 'a')
+            char chrValuePreta = 'h';
+            while (chrValuePreta > ('a' - 1))
             {
-                PutNewPiece(chrValue, 2, new Peao(tab, Cor.Branca));
-                chrValue = (char)(((int)chrValue) - 1);
+                PutNewPiece(chrValuePreta, intLine, new Peao(tab, cor));
+                chrValuePreta = (char)(chrValuePreta - 1);
             }
-
 
         }
 
