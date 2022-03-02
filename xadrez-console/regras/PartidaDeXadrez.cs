@@ -41,6 +41,32 @@ namespace xadrez_console.regras
             {
                 capturadas.Add(pieceCaptured);
             }
+
+            if (p is Rei)
+            {
+                bool blnSallRock = destiny.Coluna == origin.Coluna + 2;
+                bool blnLargeRock = destiny.Coluna == origin.Coluna - 2;
+                if (blnSallRock || blnLargeRock)
+                {
+                    Posicao positionTower;
+                    Posicao positionDestinyTower;
+                    if (blnSallRock)
+                    {
+                        positionTower = new Posicao(origin.Linha, origin.Coluna + 3);
+                        positionDestinyTower = new Posicao(origin.Linha, origin.Coluna + 1);
+                    }
+                    else
+                    {
+                        positionTower = new Posicao(origin.Linha, origin.Coluna - 4);
+                        positionDestinyTower = new Posicao(origin.Linha, origin.Coluna - 1);
+                    }
+                    Peca pieceTower = tab.RemovePiece(positionTower);
+                    pieceTower.AddQtdMoviment();
+                    tab.ColocarPeca(pieceTower, positionDestinyTower);
+                }
+
+            }
+
             return pieceCaptured;
         }
 
@@ -159,6 +185,31 @@ namespace xadrez_console.regras
                 capturadas.Remove(pieceCaptured);
             }
             tab.ColocarPeca(p, origin);
+
+            if (p is Rei)
+            {
+                bool blnSallRock = destiny.Coluna == origin.Coluna + 2;
+                bool blnLargeRock = destiny.Coluna == origin.Coluna - 2;
+                if (blnSallRock || blnLargeRock)
+                {
+                    Posicao positionTower;
+                    Posicao positionDestinyTower;
+                    if (blnSallRock)
+                    {
+                        positionTower = new Posicao(origin.Linha, origin.Coluna + 3);
+                        positionDestinyTower = new Posicao(origin.Linha, origin.Coluna + 1);
+                    }
+                    else
+                    {
+                        positionTower = new Posicao(origin.Linha, origin.Coluna - 4);
+                        positionDestinyTower = new Posicao(origin.Linha, origin.Coluna - 1);
+                    }
+                    Peca pieceTower = tab.RemovePiece(positionTower);
+                    pieceTower.DecrementQtdMoviment();
+                    tab.ColocarPeca(pieceTower, positionDestinyTower);
+                }
+
+            }
         }
 
         public void MakesMove(Posicao origin, Posicao destiny)
@@ -196,12 +247,12 @@ namespace xadrez_console.regras
                 intLine = 1;
 
             PutNewPiece('a', intLine, new Torre(tab, cor));
-            PutNewPiece('b', intLine, new Cavalo(tab, cor));
-            PutNewPiece('c', intLine, new Bispo(tab, cor));
-            PutNewPiece('d', intLine, new Rei(tab, cor));
-            PutNewPiece('e', intLine, new Rainha(tab, cor));
-            PutNewPiece('f', intLine, new Bispo(tab, cor));
-            PutNewPiece('g', intLine, new Cavalo(tab, cor));
+            //PutNewPiece('b', intLine, new Cavalo(tab, cor));
+            //PutNewPiece('c', intLine, new Bispo(tab, cor));
+            //PutNewPiece('d', intLine, new Rainha(tab, cor));
+            PutNewPiece('e', intLine, new Rei(tab, cor, this));
+            //PutNewPiece('f', intLine, new Bispo(tab, cor));
+            //PutNewPiece('g', intLine, new Cavalo(tab, cor));
             PutNewPiece('h', intLine, new Torre(tab, cor));
 
             if (cor == Cor.Preta)
