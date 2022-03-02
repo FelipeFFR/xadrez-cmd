@@ -9,8 +9,10 @@ namespace xadrez_console.pecas
 {
     class Peao : Peca
     {
-        public Peao(Tabuleiro tab, Cor cor) : base(tab, cor)
+        private regras.PartidaDeXadrez _partida;
+        public Peao(Tabuleiro tab, Cor cor, regras.PartidaDeXadrez partida) : base(tab, cor)
         {
+            _partida = partida;
         }
 
         public override bool[,] GetPossiblesMoviment()
@@ -46,10 +48,30 @@ namespace xadrez_console.pecas
             if (CanMovePiece(position) && Tab.ExistePeca(position))
                 blnMat[position.Linha, position.Coluna] = true;
 
+            #region En passant
+            EnPassant();
+                #endregion
 
             return blnMat;
         }
 
+        private bool EnPassant()
+        {
+            int intLineEnPassant = 3;
+            if (Cor == Cor.Preta)
+            {
+                intLineEnPassant = 4;
+            }
+            if (position.Linha == intLineEnPassant)
+            {
+                Posicao positionEnPassant =
+                if (Tab.GetPiece() == _partida.PieceVunerableEnPassant)
+                {
+
+                }
+            }
+            return true;
+        }
         public override string ToString()
         {
             return "P";

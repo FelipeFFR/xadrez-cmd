@@ -15,6 +15,8 @@ namespace xadrez_console.regras
 
         private HashSet<Peca> capturadas;
 
+        public Peca PieceVunerableEnPassant { get; private set; }
+
         public bool BlnIsCheck { get; private set; }
 
         public PartidaDeXadrez()
@@ -28,7 +30,7 @@ namespace xadrez_console.regras
             PutPieces(Cor.Branca);
             BlnPartidaTerminada = false;
             BlnIsCheck = false;
-
+            PieceVunerableEnPassant = null;
         }
 
         private Peca ExecuteMoviment(Posicao origin, Posicao destiny)
@@ -236,6 +238,18 @@ namespace xadrez_console.regras
                 Turno++;
                 ChangePlayer();
             }
+
+            #region en passant
+            Peca piece = tab.GetPiece(destiny);
+            if (piece is Peao)
+            {
+                if (piece.QtdMovimentos == 1 && (destiny.Linha == origin.Linha + (2 * (piece.Cor == Cor.Branca ? 1 : -1))))
+                    PieceVunerableEnPassant = piece;
+            }
+            else
+                PieceVunerableEnPassant = null;
+            #endregion
+
         }
 
         public void PutPieces(Cor cor)
@@ -263,7 +277,7 @@ namespace xadrez_console.regras
             char chrValuePreta = 'h';
             while (chrValuePreta > ('a' - 1))
             {
-                PutNewPiece(chrValuePreta, intLine, new Peao(tab, cor));
+                PutNewPiece(chrValuePreta, intLine, new Peao(tab, cor, this));
                 chrValuePreta = (char)(chrValuePreta - 1);
             }
 
