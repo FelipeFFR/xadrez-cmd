@@ -69,6 +69,23 @@ namespace xadrez_console.regras
 
             }
 
+            if(p is Peao)
+            {
+                if((origin.Coluna == destiny.Coluna + 1 || origin.Coluna == destiny.Coluna - 1) && pieceCaptured == null)
+                {
+                    int intLinha = 1;
+                    if(p.Cor == Cor.Preta)
+                    {
+                        intLinha *= -1;
+                    }
+
+                    Posicao positionPeao = new Posicao(destiny.Linha + intLinha, destiny.Coluna);
+                    pieceCaptured = tab.RemovePiece(positionPeao);
+                    capturadas.Add(pieceCaptured);
+
+                }
+            }
+
             return pieceCaptured;
         }
 
@@ -212,6 +229,24 @@ namespace xadrez_console.regras
                 }
 
             }
+
+            //#en passant
+            if (p is Peao)
+            {
+                if ((origin.Coluna == origin.Coluna + 1 || origin.Coluna == origin.Coluna - 1) && pieceCaptured == PieceVunerableEnPassant)
+                {
+                    Peca pieceCapturedEnPassant = tab.RemovePiece(destiny);
+                    int intLinha = -1;
+                    if (p.Cor == Cor.Preta)
+                    {
+                        intLinha *= 1;
+                    }
+
+                    Posicao positionPeao = new Posicao(destiny.Linha + intLinha, destiny.Coluna);
+                    tab.ColocarPeca(pieceCapturedEnPassant, positionPeao);
+
+                }
+            }
         }
 
         public void MakesMove(Posicao origin, Posicao destiny)
@@ -243,7 +278,8 @@ namespace xadrez_console.regras
             Peca piece = tab.GetPiece(destiny);
             if (piece is Peao)
             {
-                if (piece.QtdMovimentos == 1 && (destiny.Linha == origin.Linha + (2 * (piece.Cor == Cor.Branca ? 1 : -1))))
+                int intLine = (2 * (piece.Cor == Cor.Preta ? 1 : -1));
+                if (piece.QtdMovimentos == 1 && (destiny.Linha == origin.Linha + intLine))
                     PieceVunerableEnPassant = piece;
             }
             else

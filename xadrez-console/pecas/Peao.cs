@@ -49,13 +49,21 @@ namespace xadrez_console.pecas
                 blnMat[position.Linha, position.Coluna] = true;
 
             #region En passant
-            EnPassant();
-                #endregion
+            //En Passant direita
+            position.DefineValues(Posicao.Linha, Posicao.Coluna + 1);
+            if (CanMovePiece(position) && EnPassant(position))
+                blnMat[position.Linha - intValue, position.Coluna] = true;
+
+            //En Passant esquerda
+            position.DefineValues(Posicao.Linha, Posicao.Coluna - 1);
+            if (CanMovePiece(position) && EnPassant(position))
+                blnMat[position.Linha - intValue, position.Coluna] = true;
+            #endregion
 
             return blnMat;
         }
 
-        private bool EnPassant()
+        private bool EnPassant(Posicao position)
         {
             int intLineEnPassant = 3;
             if (Cor == Cor.Preta)
@@ -64,13 +72,13 @@ namespace xadrez_console.pecas
             }
             if (position.Linha == intLineEnPassant)
             {
-                Posicao positionEnPassant =
-                if (Tab.GetPiece() == _partida.PieceVunerableEnPassant)
+                Peca piece = Tab.GetPiece(position);
+                if (piece == _partida.PieceVunerableEnPassant)
                 {
-
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
         public override string ToString()
         {
