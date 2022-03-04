@@ -12,6 +12,19 @@ namespace xadrez_console.tabuleiro
         public int Colunas { get; set; }
         public Peca[,] Pecas;
 
+        public static bool PositionBoardIsValid(string strPosition)
+        {
+            if (strPosition.Length == 2)
+            {
+                char[] charColumns = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+                bool blnColumnValid = charColumns.Contains(strPosition.ToUpper()[0]);
+                Int16 intLine = Convert.ToInt16(strPosition[1].ToString());
+
+                if (blnColumnValid && intLine > 0 && intLine <= 8)
+                    return true;
+            }
+            return false;
+        }
 
         public Tabuleiro(int linhas, int colunas)
         {
@@ -49,7 +62,7 @@ namespace xadrez_console.tabuleiro
 
         }
 
-        
+
 
         public bool ExistePeca(Posicao pos)
         {
@@ -59,7 +72,7 @@ namespace xadrez_console.tabuleiro
 
         public void ValidarPosicao(Posicao pos)
         {
-            if (pos.Linha < 0 || pos.Linha > Linhas -1 || pos.Coluna < 0 || pos.Coluna > Colunas -1)
+            if (pos.Linha < 0 || pos.Linha > Linhas - 1 || pos.Coluna < 0 || pos.Coluna > Colunas - 1)
                 throw new exception.TabuleiroException("Posição inválida!");
         }
 

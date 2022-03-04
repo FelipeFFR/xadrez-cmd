@@ -69,12 +69,12 @@ namespace xadrez_console.regras
 
             }
 
-            if(p is Peao)
+            if (p is Peao)
             {
-                if((origin.Coluna == destiny.Coluna + 1 || origin.Coluna == destiny.Coluna - 1) && pieceCaptured == null)
+                if ((origin.Coluna == destiny.Coluna + 1 || origin.Coluna == destiny.Coluna - 1) && pieceCaptured == null)
                 {
                     int intLinha = 1;
-                    if(p.Cor == Cor.Preta)
+                    if (p.Cor == Cor.Preta)
                     {
                         intLinha *= -1;
                     }
@@ -259,6 +259,46 @@ namespace xadrez_console.regras
                 throw new exception.TabuleiroException("Você não pode se colocar em xeque.");
             }
 
+            Peca piece = tab.GetPiece(destiny);
+
+            if (piece is Peao)
+            {
+                int intCountMaxLine = 0;
+                if (piece.Cor == Cor.Preta)
+                    intCountMaxLine = 7;
+
+                if (destiny.Linha == intCountMaxLine)
+                {
+                    piece = tab.RemovePiece(destiny);
+                    pecas.Remove(piece);
+                    System.Console.WriteLine("Escolha qual peça você deseja promover o seu peão:");
+                    System.Console.WriteLine("B - Bispo, C - Cavalo, RA - Rainha e T - Torre");
+                    string strEscolhaUsuario = "";
+                    while (strEscolhaUsuario != "B" &&
+                        strEscolhaUsuario != "C" &&
+                        strEscolhaUsuario != "RA" &&
+                        strEscolhaUsuario != "T")
+                    {
+                        strEscolhaUsuario = System.Console.ReadLine();
+                    }
+
+                    Peca newPiece = null;
+                    if (strEscolhaUsuario == "B")
+                        newPiece = new Bispo(tab, piece.Cor);
+                    else if (strEscolhaUsuario == "C")
+                        newPiece = new Cavalo(tab, piece.Cor);
+                    else if (strEscolhaUsuario == "RA")
+                        newPiece = new Rainha(tab, piece.Cor);
+                    else if (strEscolhaUsuario == "T")
+                        newPiece = new Torre(tab, piece.Cor);
+
+                    tab.ColocarPeca(newPiece, destiny);
+                    pecas.Add(newPiece);
+
+                }
+
+            }
+
             if (IsInCheck(GetCollorOpponent(CorJogadorTurno)))
                 BlnIsCheck = true;
             else
@@ -275,7 +315,7 @@ namespace xadrez_console.regras
             }
 
             #region en passant
-            Peca piece = tab.GetPiece(destiny);
+
             if (piece is Peao)
             {
                 int intLine = (2 * (piece.Cor == Cor.Preta ? 1 : -1));

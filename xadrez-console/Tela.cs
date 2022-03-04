@@ -149,5 +149,19 @@ namespace xadrez_console
                 throw new exception.TabuleiroException("Digite uma posição válida.");
             }
         }
+
+
+        public static string ValidateUserInput()
+        {
+            string strInput = "";
+            strInput = Console.ReadLine();
+            while (!Tabuleiro.PositionBoardIsValid(strInput))
+            {
+                Console.WriteLine("Digite uma posição válida!");
+                strInput = Console.ReadLine();
+            }
+            return strInput;
+        }
+
     }
 }
