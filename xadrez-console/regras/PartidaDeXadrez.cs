@@ -185,7 +185,7 @@ namespace xadrez_console.regras
         public void ValidatePositionDestiny(Posicao posOrigen, Posicao posDestiny)
         {
             var piece = tab.GetPiece(posOrigen);
-            if (!piece.CanMovePiece(posDestiny))
+            if (!piece.CanMoveToDestiny(posDestiny))
                 throw new exception.TabuleiroException("Posição de destino inválida.");
         }
 
@@ -337,12 +337,12 @@ namespace xadrez_console.regras
                 intLine = 1;
 
             PutNewPiece('a', intLine, new Torre(tab, cor));
-            //PutNewPiece('b', intLine, new Cavalo(tab, cor));
-            //PutNewPiece('c', intLine, new Bispo(tab, cor));
-            //PutNewPiece('d', intLine, new Rainha(tab, cor));
+            PutNewPiece('b', intLine, new Cavalo(tab, cor));
+            PutNewPiece('c', intLine, new Bispo(tab, cor));
+            PutNewPiece('d', intLine, new Rainha(tab, cor));
             PutNewPiece('e', intLine, new Rei(tab, cor, this));
-            //PutNewPiece('f', intLine, new Bispo(tab, cor));
-            //PutNewPiece('g', intLine, new Cavalo(tab, cor));
+            PutNewPiece('f', intLine, new Bispo(tab, cor));
+            PutNewPiece('g', intLine, new Cavalo(tab, cor));
             PutNewPiece('h', intLine, new Torre(tab, cor));
 
             if (cor == Cor.Preta)

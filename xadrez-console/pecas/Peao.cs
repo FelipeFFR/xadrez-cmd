@@ -27,7 +27,7 @@ namespace xadrez_console.pecas
 
             //acima
             position.DefineValues(Posicao.Linha - intValue, Posicao.Coluna);
-            if (CanMovePiece(position) && !Tab.ExistePeca(position))
+            if (Tab.VerifyValidatesPosition(position) && CanMovePiece(position) && !Tab.ExistePeca(position))
                 blnMat[position.Linha, position.Coluna] = true;
 
             //Primeiro movimento

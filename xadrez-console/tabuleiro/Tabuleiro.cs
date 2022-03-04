@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using xadrez_console.pecas;
 
 namespace xadrez_console.tabuleiro
 {
@@ -66,15 +67,22 @@ namespace xadrez_console.tabuleiro
 
         public bool ExistePeca(Posicao pos)
         {
-            ValidarPosicao(pos);
+            ValidateOriginPosition(pos);
             return GetPiece(pos) != null;
         }
 
-        public void ValidarPosicao(Posicao pos)
+        public bool VerifyValidatesPosition(Posicao pos)
         {
             if (pos.Linha < 0 || pos.Linha > Linhas - 1 || pos.Coluna < 0 || pos.Coluna > Colunas - 1)
-                throw new exception.TabuleiroException("Posição inválida!");
+                return false;
+            return true;
         }
 
+
+        public void ValidateOriginPosition(Posicao pos)
+        {
+            if (!VerifyValidatesPosition(pos))
+                throw new exception.TabuleiroException("Posição inválida!");
+        }
     }
 }

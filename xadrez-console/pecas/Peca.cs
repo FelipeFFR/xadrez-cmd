@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using xadrez_console.tabuleiro;
 
-namespace xadrez_console.tabuleiro
+namespace xadrez_console.pecas
 {
     public abstract class Peca
     {
@@ -16,7 +17,7 @@ namespace xadrez_console.tabuleiro
         public Peca(Tabuleiro tab, Cor cor)
         {
             this.Posicao = null;
-            this.Cor =cor;
+            this.Cor = cor;
             this.Tab = tab;
             this.QtdMovimentos = 0;
         }
@@ -35,7 +36,8 @@ namespace xadrez_console.tabuleiro
         {
             try
             {
-                Tab.ValidarPosicao(pos);
+                if (!Tab.VerifyValidatesPosition(pos))
+                    return false;
                 Peca p = Tab.GetPiece(pos);
                 return p == null || p.Cor != this.Cor;
             }
@@ -45,10 +47,15 @@ namespace xadrez_console.tabuleiro
             }
         }
 
+        public bool CanMoveToDestiny(Posicao pos)
+        {
+            return GetPossiblesMoviment()[pos.Linha, pos.Coluna];
+        }
+
         public bool ExistsPossiblesMoviments()
         {
             bool[,] mat = GetPossiblesMoviment();
-            for (int i=0;i<Tab.Linhas;i++)
+            for (int i = 0; i < Tab.Linhas; i++)
             {
                 for (int j = 0; j < Tab.Colunas; j++)
                 {
@@ -60,6 +67,6 @@ namespace xadrez_console.tabuleiro
         }
 
         public abstract bool[,] GetPossiblesMoviment();
-        
+
     }
 }
