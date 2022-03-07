@@ -98,9 +98,12 @@ namespace xadrez_console
         public static void PrintGroupCapturedPieces(HashSet<Peca> PiecesCaptureds)
         {
             Console.Write("[");
-            foreach (Peca x in PiecesCaptureds)
+            List<Peca> pieces = PiecesCaptureds.ToList();
+            foreach (Peca x in pieces)
             {
-                Console.Write(x + ", ");
+                Console.Write(x);    
+                if (pieces.IndexOf(x) != pieces.Count-1)
+                    Console.Write(", ");
             }
             Console.Write("]");
         }

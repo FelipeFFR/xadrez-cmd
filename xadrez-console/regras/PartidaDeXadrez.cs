@@ -274,12 +274,16 @@ namespace xadrez_console.regras
                     System.Console.WriteLine("Escolha qual peça você deseja promover o seu peão:");
                     System.Console.WriteLine("B - Bispo, C - Cavalo, RA - Rainha e T - Torre");
                     string strEscolhaUsuario = "";
+                    bool blnFirstInput = true;
                     while (strEscolhaUsuario != "B" &&
                         strEscolhaUsuario != "C" &&
                         strEscolhaUsuario != "RA" &&
                         strEscolhaUsuario != "T")
                     {
-                        strEscolhaUsuario = System.Console.ReadLine();
+                        if(!blnFirstInput)
+                            System.Console.WriteLine("Por favor, digite um valor válido!");
+                        strEscolhaUsuario = System.Console.ReadLine().ToUpper();
+                        blnFirstInput = false;
                     }
 
                     Peca newPiece = null;
