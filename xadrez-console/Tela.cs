@@ -56,9 +56,9 @@ namespace xadrez_console
 
         }
 
-        public static void PrintMatch(regras.PartidaDeXadrez partida)
+        public static void PrintMatch(regras.PartidaDeXadrez partida, bool[,] blnPossiblesPositions = null)
         {
-            Tela.PrintTabuleiro(partida.tab);
+            Tela.PrintTabuleiro(partida.tab, blnPossiblesPositions);
             Console.WriteLine();
             PrintCapturedPieces(partida);
             Console.WriteLine();

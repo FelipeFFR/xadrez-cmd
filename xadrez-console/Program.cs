@@ -20,17 +20,18 @@ namespace xadrez_console
                         
                         Console.WriteLine();
                         Console.Write("Origem: ");
-                        string strUser = Tela.ValidateUserInput();
-                        Posicao origin = Tela.LerPosicaoXadrez(strUser).ToPosition();
+                        string strInputUser = Tela.ValidateUserInput();
+                        Posicao origin = Tela.LerPosicaoXadrez(strInputUser).ToPosition();
                         partida.ValidatePositionOrigen(origin);
 
                         bool[,] posicoesPossiveis = partida.tab.GetPiece(origin).GetPossiblesMoviment();
                         Console.Clear();
-                        Tela.PrintTabuleiro(partida.tab, posicoesPossiveis);
+                        //Tela.PrintTabuleiro(partida.tab, posicoesPossiveis);
 
+                        Tela.PrintMatch(partida, posicoesPossiveis);
                         Console.Write("Destino: ");
-                        strUser = Tela.ValidateUserInput();
-                        Posicao destiny = Tela.LerPosicaoXadrez(strUser).ToPosition();
+                        strInputUser = Tela.ValidateUserInput();
+                        Posicao destiny = Tela.LerPosicaoXadrez(strInputUser).ToPosition();
                         partida.ValidatePositionDestiny(origin, destiny);
                         partida.MakesMove(origin, destiny);
                     }
